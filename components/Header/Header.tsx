@@ -1,7 +1,9 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
+import { fetchProducts } from "../../api/stripe";
 import AppTitle from "./AppTitle";
 import Cart from "./Cart";
+
 const Header = () => {
 	return (
 		<HeaderLayout>
@@ -13,7 +15,7 @@ const Header = () => {
 const HeaderLayout = styled.header`
 	width: 100%;
 	height: 80px;
-	background-color: whitesmoke;
+	background-color: var(--whitesmoke);
 	display: flex;
 	flex-direction: row;
 	align-items: center;

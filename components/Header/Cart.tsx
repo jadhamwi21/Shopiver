@@ -1,21 +1,23 @@
 import React from "react";
 import styled from "styled-components";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
+import Link from "next/link";
 interface Props {}
 
 const Cart = (props: Props) => {
 	return (
-		<CartWrapper>
-			<ShoppingCartIcon />
-			<CartItemsCountContainer>1</CartItemsCountContainer>
-		</CartWrapper>
+		<Link href="/cart">
+			<CartWrapper>
+				<ShoppingCartIcon />
+				<CartItemsCountContainer>1</CartItemsCountContainer>
+			</CartWrapper>
+		</Link>
 	);
 };
 const CartWrapper = styled.div`
 	height: 100%;
 	width: fit-content;
 	position: relative;
-
 	padding: 0px 1.2em;
 	border-radius: 4px;
 	display: grid;
