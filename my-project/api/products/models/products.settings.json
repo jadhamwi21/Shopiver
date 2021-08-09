@@ -40,6 +40,9 @@
     },
     "product_id": {
       "type": "biginteger"
+    },
+    "quantity": {
+      "type": "biginteger"
     }
   }
 }

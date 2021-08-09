@@ -23,6 +23,7 @@ const ProductCard = ({ Product }: Props) => {
 					{Product.price} {GetCurrencySymbol(Product.currency)}
 				</BlueWrapper>
 			</DetailElement>
+
 			<AddToCartElement>
 				<AddShoppingCartIcon />
 			</AddToCartElement>
