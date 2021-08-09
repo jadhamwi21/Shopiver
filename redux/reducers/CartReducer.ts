@@ -1,7 +1,6 @@
-import { HYDRATE } from "next-redux-wrapper";
-import { AnyAction } from "redux";
 import ProductInterface from "../../types/ProductInterface";
 import { CartActionTypeKeys } from "../actions/ActionTypeKey";
+import { CartActions } from "../actions/ActionTypes";
 export interface StateInterface {
 	CartItems: ProductInterface[];
 }
@@ -12,11 +11,9 @@ const InitialState: StateInterface = {
 
 export const CartReducer = (
 	state: StateInterface = InitialState,
-	action: AnyAction
+	action: CartActions
 ): StateInterface => {
 	switch (action.type) {
-		case HYDRATE:
-			return { ...state, ...action.payload };
 		case CartActionTypeKeys.UpdateCart:
 			return { ...state, CartItems: action.payload.UpdatedCartItems };
 		default:

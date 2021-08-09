@@ -2,8 +2,8 @@ import ProductInterface from "../../types/ProductInterface";
 import { StateInterface } from "../reducers/CartReducer";
 import store from "../store/store";
 import { CartActionTypeKeys } from "./ActionTypeKey";
-import { CartActions } from "./ActionTypes";
-export const AddToCart = (Product: ProductInterface): CartActions => {
+import { AppAction, CartActions } from "./ActionTypes";
+export const AddToCart = (Product: ProductInterface): AppAction => {
 	const OldCartItems = store.getState().Cart.CartItems;
 	let DoesExist = false;
 	OldCartItems.forEach((Item) => {
@@ -19,8 +19,8 @@ export const AddToCart = (Product: ProductInterface): CartActions => {
 			},
 		};
 	}
-	const NewCartItems = [...OldCartItems, Product];
-
+	const NewCartItems = [...OldCartItems, { ...Product, wantedQuantity: "1" }];
+	console.log(NewCartItems);
 	return {
 		type: CartActionTypeKeys.UpdateCart,
 		payload: {
@@ -28,7 +28,7 @@ export const AddToCart = (Product: ProductInterface): CartActions => {
 		},
 	};
 };
-export const RemoveFromCart = (ProductID: number): CartActions => {
+export const RemoveFromCart = (ProductID: number): AppAction => {
 	const OldCartItems = store.getState().Cart.CartItems;
 	return {
 		type: CartActionTypeKeys.UpdateCart,
@@ -41,14 +41,17 @@ export const RemoveFromCart = (ProductID: number): CartActions => {
 };
 export const IncrementWantedQuantityOfProduct = (
 	ProductID: number
-): CartActions => {
+): AppAction => {
 	const OldCartItems = store.getState().Cart.CartItems;
 	return {
 		type: CartActionTypeKeys.UpdateCart,
 		payload: {
 			UpdatedCartItems: OldCartItems.map((Product) => {
 				if (Product.product_id === ProductID) {
-					return { ...Product, quantity: Product.quantity + 1 };
+					return {
+						...Product,
+						wantedQuantity: (parseInt(Product.wantedQuantity) + 1).toString(),
+					};
 				} else {
 					return Product;
 				}
@@ -58,14 +61,17 @@ export const IncrementWantedQuantityOfProduct = (
 };
 export const DecrementWantedQuantityOfProduct = (
 	ProductID: number
-): CartActions => {
+): AppAction => {
 	const OldCartItems = store.getState().Cart.CartItems;
 	return {
 		type: CartActionTypeKeys.UpdateCart,
 		payload: {
 			UpdatedCartItems: OldCartItems.map((Product) => {
 				if (Product.product_id === ProductID) {
-					return { ...Product, quantity: Product.quantity - 1 };
+					return {
+						...Product,
+						wantedQuantity: (parseInt(Product.wantedQuantity) - 1).toString(),
+					};
 				} else {
 					return Product;
 				}

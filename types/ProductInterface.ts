@@ -10,7 +10,8 @@ export interface ProductInterface {
 	currency: Currency;
 	product_id: number;
 	product_image: Image;
-	quantity: number;
+	quantity: string;
+	wantedQuantity: string;
 }
 
 export default ProductInterface;

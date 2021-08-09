@@ -1,4 +1,4 @@
-import { fetchProducts } from "../api/stripe";
+import { fetchProducts } from "../api/strapi";
 import React from "react";
 import ProductsLayout from "../components/Home/ProductsLayout";
 import ProductsLister from "../components/Home/ProductsLister";
@@ -12,6 +12,7 @@ export const getServerSideProps =
 			return { props: { Error: true, ProductsList: [] } };
 		} else {
 			const FetchedProducts = Response;
+
 			return { props: { ProductsList: FetchedProducts, Error: false } };
 		}
 	};

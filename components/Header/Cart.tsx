@@ -2,16 +2,29 @@ import React from "react";
 import styled from "styled-components";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import Link from "next/link";
-interface Props {}
+import { useAppSelector } from "../../redux/store/store";
+import { useRouter } from "next/dist/client/router";
 
-const Cart = (props: Props) => {
+const Cart = () => {
+	const NumberOfItemsInCart = useAppSelector(
+		(state) => state.Cart.CartItems.length
+	);
+	const Router = useRouter();
 	return (
-		<Link href="/cart">
-			<CartWrapper>
-				<ShoppingCartIcon />
-				<CartItemsCountContainer>1</CartItemsCountContainer>
-			</CartWrapper>
-		</Link>
+		<>
+			{Router.pathname !== "/cart" && (
+				<Link href="/cart" passHref={true}>
+					<CartWrapper>
+						<ShoppingCartIcon />
+						{NumberOfItemsInCart !== 0 && (
+							<CartItemsCountContainer>
+								{NumberOfItemsInCart}
+							</CartItemsCountContainer>
+						)}
+					</CartWrapper>
+				</Link>
+			)}
+		</>
 	);
 };
 const CartWrapper = styled.div`

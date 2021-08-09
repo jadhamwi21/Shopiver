@@ -1,20 +1,18 @@
 import React from "react";
 import styled from "styled-components";
-import ProductInterface from "../../types/ProductInterface";
+import ProductInterface from "../types/ProductInterface";
 import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
-import { GetCurrencySymbol } from "../../helper/functions";
-import { useDispatch, useSelector } from "react-redux";
-import { AddToCart } from "../../redux/actions/ActionCreators";
-import {
-	AppState,
-	useAppDispatch,
-	useAppSelector,
-} from "../../redux/store/store";
+import { GetCurrencySymbol } from "../helper/functions";
+import { AddToCart } from "../redux/actions/ActionCreators";
+import { useAppDispatch } from "../redux/store/store";
+import IncrementDecrementComponent from "./Cart/IncrementDecrementComponent";
+import RemoveButton from "./Cart/RemoveButton";
 interface Props {
 	Product: ProductInterface;
+	Variant: "Cart" | "Regular";
 }
 
-const ProductCard = ({ Product }: Props) => {
+const ProductCard = ({ Product, Variant }: Props) => {
 	const Dispatch = useAppDispatch();
 	return (
 		<Card>
@@ -31,10 +29,16 @@ const ProductCard = ({ Product }: Props) => {
 					{Product.price} {GetCurrencySymbol(Product.currency)}
 				</BlueWrapper>
 			</DetailElement>
-
-			<AddToCartElement onClick={() => Dispatch(AddToCart(Product))}>
-				<AddShoppingCartIcon />
-			</AddToCartElement>
+			{Variant === "Regular" ? (
+				<AddToCartElement onClick={() => Dispatch(AddToCart(Product))}>
+					<AddShoppingCartIcon />
+				</AddToCartElement>
+			) : (
+				<CartVariantFlexbox>
+					<IncrementDecrementComponent Product={Product} />
+					<RemoveButton Product={Product} />
+				</CartVariantFlexbox>
+			)}
 		</Card>
 	);
 };
@@ -80,6 +84,13 @@ const AddToCartElement = styled.div`
 	&:active {
 		background-color: rgba(0, 0, 0, 0.4);
 	}
+`;
+const CartVariantFlexbox = styled.div`
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+	width: 100%;
 `;
 
 export default ProductCard;

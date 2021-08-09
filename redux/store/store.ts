@@ -5,6 +5,7 @@ import { rootReducer } from "../reducers/rootReducer";
 export const store = createStore(rootReducer);
 
 store.subscribe(() => console.log(store.getState()));
+
 export type AppState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
 

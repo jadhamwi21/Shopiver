@@ -1,4 +1,3 @@
-import ProductInterface from "../types/ProductInterface";
 import axios from "axios";
 import { ProductFetchResponseType } from "../types/ProductsFetchResponseType";
 export const fetchProducts = async (): Promise<ProductFetchResponseType> => {
