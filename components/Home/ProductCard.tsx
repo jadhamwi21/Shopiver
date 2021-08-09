@@ -3,11 +3,19 @@ import styled from "styled-components";
 import ProductInterface from "../../types/ProductInterface";
 import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
 import { GetCurrencySymbol } from "../../helper/functions";
+import { useDispatch, useSelector } from "react-redux";
+import { AddToCart } from "../../redux/actions/ActionCreators";
+import {
+	AppState,
+	useAppDispatch,
+	useAppSelector,
+} from "../../redux/store/store";
 interface Props {
 	Product: ProductInterface;
 }
 
 const ProductCard = ({ Product }: Props) => {
+	const Dispatch = useAppDispatch();
 	return (
 		<Card>
 			<ImageElement
@@ -24,7 +32,7 @@ const ProductCard = ({ Product }: Props) => {
 				</BlueWrapper>
 			</DetailElement>
 
-			<AddToCartElement>
+			<AddToCartElement onClick={() => Dispatch(AddToCart(Product))}>
 				<AddShoppingCartIcon />
 			</AddToCartElement>
 		</Card>
