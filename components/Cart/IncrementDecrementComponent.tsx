@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useRef } from "react";
 import styled from "styled-components";
+import useButtonInterval from "../../hooks/useButtonInterval";
 import {
 	DecrementWantedQuantityOfProduct,
 	IncrementWantedQuantityOfProduct,
@@ -22,22 +23,31 @@ const IncrementDecrementComponent = ({ Product }: Props) => {
 		};
 	});
 	const Dispatch = useAppDispatch();
+	const { DecrementProps, IncrementProps } = useButtonInterval({
+		CollectionOfSetIntervalFunctions: {
+			DecrementProps: () => {
+				Dispatch(DecrementWantedQuantityOfProduct(Product.product_id));
+			},
+			IncrementProps: () => {
+				Dispatch(IncrementWantedQuantityOfProduct(Product.product_id));
+			},
+		},
+		delay: 100,
+		UpperLimit: parseInt(Quantity),
+		WantedQuantity: parseInt(WantedQuantity),
+	});
 	return (
 		<Container>
 			<IncrementDecrementButton
-				onClick={() =>
-					Dispatch(DecrementWantedQuantityOfProduct(Product.product_id))
-				}
 				disabled={WantedQuantity === "1"}
+				{...DecrementProps}
 			>
 				-
 			</IncrementDecrementButton>
 			<CurrentWantedQuantity>{WantedQuantity}</CurrentWantedQuantity>
 			<IncrementDecrementButton
-				onClick={() =>
-					Dispatch(IncrementWantedQuantityOfProduct(Product.product_id))
-				}
 				disabled={WantedQuantity === Quantity}
+				{...IncrementProps}
 			>
 				+
 			</IncrementDecrementButton>
