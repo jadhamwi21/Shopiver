@@ -1,14 +1,16 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
-import { fetchProducts } from "../../api/strapi";
 import AppTitle from "./AppTitle";
 import Cart from "./Cart";
-
+import { useRouter } from "next/router";
+import Checkout from "./Checkout";
 const Header = () => {
+	const Router = useRouter();
 	return (
 		<HeaderLayout>
 			<AppTitle />
-			<Cart />
+			{/*This Conditional Rendering Statement Means That If The Pathname Was On The Home Page Show Cart Button, Otherwise Show Checkout Button(On Cart Page)*/}
+			{Router.pathname === "/" ? <Cart /> : <Checkout />}
 		</HeaderLayout>
 	);
 };
