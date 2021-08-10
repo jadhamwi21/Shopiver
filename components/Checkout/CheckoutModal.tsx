@@ -1,23 +1,26 @@
-import React from "react";
+import React, { createContext, useContext } from "react";
 import styled, { keyframes } from "styled-components";
 import CheckoutForm from "./CheckoutForm";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
-
+export const ModalContext = createContext<null | (() => void)>(null);
 interface Props {
 	closeModal: () => void;
 }
+
 const stripePromise = loadStripe(
 	"pk_test_51JMuG0I5RmpmwgripCR0qbn6FNhr89goc84VuejDmzcvzEV3JenIM8yVxLFCdfPX6PiuDnL5JLSgGVVP4dF8dBvE00YcQ4gfUW"
 );
 
 const CheckoutModal = ({ closeModal }: Props) => {
 	return (
-		<Container onClick={() => closeModal()}>
-			<Elements stripe={stripePromise}>
-				<CheckoutForm />
-			</Elements>
-		</Container>
+		<ModalContext.Provider value={closeModal}>
+			<Container onClick={() => closeModal()}>
+				<Elements stripe={stripePromise}>
+					<CheckoutForm />
+				</Elements>
+			</Container>
+		</ModalContext.Provider>
 	);
 };
 const FadeIn = keyframes`

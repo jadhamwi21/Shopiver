@@ -3,6 +3,16 @@ import { StateInterface } from "../reducers/CartReducer";
 import store from "../store/store";
 import { CartActionTypeKeys } from "./ActionTypeKey";
 import { AppAction, CartActions } from "./ActionTypes";
+
+export const EmptyCart = (): AppAction => {
+	return {
+		type: CartActionTypeKeys.UpdateCart,
+		payload: {
+			UpdatedCartItems: [],
+		},
+	};
+};
+
 export const AddToCart = (Product: ProductInterface): AppAction => {
 	const OldCartItems = store.getState().Cart.CartItems;
 	let DoesExist = false;

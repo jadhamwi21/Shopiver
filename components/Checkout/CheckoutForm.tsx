@@ -1,23 +1,41 @@
-import React, { FormEvent } from "react";
+import React, { FormEvent, useRef, useState } from "react";
 import styled, { keyframes } from "styled-components";
 import FormField from "./FormField";
-import {
-	CardElement,
-	Elements,
-	useStripe,
-	useElements,
-} from "@stripe/react-stripe-js";
+import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import CardInput from "./CardInput";
 import PayButton from "./PayButton";
+import CheckoutDetails from "./CheckoutDetails";
+import { useCheckoutForm } from "../../hooks/useCheckoutForm";
 const CheckoutForm = () => {
+	const { handleField, handleSubmit, status, email, fullname } =
+		useCheckoutForm();
 	return (
-		<CheckoutFormBox onClick={(e) => e.stopPropagation()}>
-			<Form onSubmit={(e) => e.preventDefault()}>
-				<FormField placeholder="Full Name" name="fullname" type="text" />
-				<FormField placeholder="Email" name="email" type="email" />
-				<CardInput />
-				<PayButton />
-			</Form>
+		<CheckoutFormBox
+			onClick={(e) => e.stopPropagation()}
+			Center={status === "Initial" || status === "Error"}
+		>
+			{status !== "Success" ? (
+				<Form onSubmit={handleSubmit}>
+					<FormField
+						placeholder="Full Name"
+						name="fullname"
+						type="text"
+						value={fullname}
+						onChange={handleField}
+					/>
+					<FormField
+						placeholder="Email"
+						name="email"
+						type="email"
+						value={email}
+						onChange={handleField}
+					/>
+					<CardInput />
+					<PayButton />
+				</Form>
+			) : (
+				<CheckoutDetails FullName={fullname} Email={email} />
+			)}
 		</CheckoutFormBox>
 	);
 };
@@ -32,8 +50,8 @@ to{
 }
 `;
 
-const CheckoutFormBox = styled.div`
-	height: 50%;
+const CheckoutFormBox = styled.div<{ Center: boolean }>`
+	height: 80%;
 	width: 50%;
 	background-color: white;
 	animation-name: ${SlideupAnimation};
@@ -42,7 +60,7 @@ const CheckoutFormBox = styled.div`
 	animation-delay: 0.2s;
 	animation-fill-mode: backwards;
 	border-radius: 6px;
-	display: grid;
+	display: ${(props) => (props.Center ? "grid" : "block")};
 	place-items: center;
 `;
 const Form = styled.form`

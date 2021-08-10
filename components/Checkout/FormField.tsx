@@ -3,12 +3,13 @@ import styled from "styled-components";
 
 interface Props {
 	name: string;
-	value: string;
 	placeholder: string;
 	type: string;
+	value: string;
+	onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const FormField = ({ name, value, placeholder, type }: Partial<Props>) => {
+const FormField = ({ name, placeholder, type, value, onChange }: Props) => {
 	return (
 		<InputElement
 			name={name}
@@ -17,6 +18,8 @@ const FormField = ({ name, value, placeholder, type }: Partial<Props>) => {
 			spellCheck={false}
 			autoComplete="off"
 			required
+			value={value}
+			onChange={onChange}
 		/>
 	);
 };
