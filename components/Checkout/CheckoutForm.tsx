@@ -51,7 +51,7 @@ to{
 `;
 
 const CheckoutFormBox = styled.div<{ Center: boolean }>`
-	height: 80%;
+	height: fit-content;
 	width: 50%;
 	background-color: white;
 	animation-name: ${SlideupAnimation};

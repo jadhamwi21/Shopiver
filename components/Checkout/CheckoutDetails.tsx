@@ -35,10 +35,11 @@ const CheckoutDetails = ({ FullName, Email }: Props) => {
 			</Table>
 			<TotalPriceElement>Total Price Is : {TotalPrice}</TotalPriceElement>
 			<ConfirmButton
-				onClick={() => {
+				onClick={async () => {
 					alert("Payment Successful, Enjoy :)");
 					closeModal!();
 					Router.push("/");
+					await new Promise((resolve) => setTimeout(resolve, 1000));
 					Dispatch(EmptyCart());
 				}}
 			>
